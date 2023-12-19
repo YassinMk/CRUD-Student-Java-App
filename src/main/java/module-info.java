@@ -9,5 +9,6 @@ module com.example.studentapp {
     opens com.example.studentapp.DAO to javafx.fxml;
     exports com.example.studentapp.DAO.entities;
     opens com.example.studentapp.DAO.entities to javafx.fxml;
-    exports com.example.studentapp;
+    exports com.example.studentapp.presentation;
+    opens com.example.studentapp.presentation to javafx.fxml;
 }
