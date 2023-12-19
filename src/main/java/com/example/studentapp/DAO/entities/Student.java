@@ -1,14 +1,14 @@
 package com.example.studentapp.DAO.entities;
 
 public class Student {
+    private int id;
     private String name;
     private String lastName;
-    private int id;
     private String email;
     private String date;
-    private String city;
+    private Ville city;
 
-    public Student( int id,String name, String lastName, String email, String date, String city) {
+    public Student( int id,String name, String lastName, String email, String date,   Ville city) {
         this.name = name;
         this.lastName = lastName;
         this.id = id;
@@ -42,7 +42,7 @@ public class Student {
         this.date = date;
     }
 
-    public void setCity(String city) {
+    public void setCity(Ville city ){
         this.city = city;
     }
 
@@ -66,7 +66,7 @@ public class Student {
         return date;
     }
 
-    public String getCity() {
+    public Ville getCity() {
         return city;
     }
 
