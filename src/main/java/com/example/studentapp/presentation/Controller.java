@@ -1,10 +1,13 @@
-package com.example.studentapp;
+package com.example.studentapp.presentation;
 
 import com.example.studentapp.DAO.StudentDaoImp;
+import com.example.studentapp.DAO.VilleDaoImpl;
 import com.example.studentapp.DAO.entities.Student;
+import com.example.studentapp.DAO.entities.Ville;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +18,7 @@ import javafx.scene.text.Text;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,36 +51,13 @@ public class Controller {
 
 
     public void initialize() {
-        city.getItems().addAll(
-                //marroc city
-                "Casablanca",
-                "Rabat",
-                "Marrakech",
-                "Tanger",
-                "Fes",
-                "Salé",
-                "Meknes",
-                "Oujda",
-                "Kenitra",
-                "Agadir",
-                "Tetouan",
-                "Temara",
-                "Safi",
-                "Mohammedia",
-                "Khouribga",
-                "El Jadida",
-                "Beni Mellal",
-                "Ait Melloul",
-                "Nador",
-                "Dar Bouazza",
-                "Taza"
-        );
+        initializeComboBox();
         columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        columnCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        columnCity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCity().getNom()));
         getSelected();
         getAllStudent();
         searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -105,7 +86,9 @@ public class Controller {
 
         } else {
             StudentDaoImp studentDao = new StudentDaoImp();
-            Student e = new Student(stdId, name.getText(), lastName.getText(), email.getText(), date.getValue().toString(), city.getSelectionModel().getSelectedItem());
+            VilleDaoImpl villeDao = new VilleDaoImpl();
+
+            Student e = new Student(stdId, name.getText(), lastName.getText(), email.getText(), date.getValue().toString(), villeDao.getByName(city.getValue()));
             studentDao.create(e);
             tableStudent.getItems().add(e);
             id.clear();
@@ -118,12 +101,22 @@ public class Controller {
 
     }
 
+    void initializeComboBox(){
+        VilleDaoImpl vdo = new VilleDaoImpl();
+        List<Ville> villes = vdo.getAll();
+        List<String> cityNames = new ArrayList<>();
+        for (Ville ville : villes) {
+            cityNames.add(ville.getNom());
+        }
+        city.getItems().addAll(cityNames);
+    }
+
     void getSelected() {
         tableStudent.setOnMouseClicked(event -> {
             id.setText(tableStudent.getSelectionModel().getSelectedItem().getId().toString());
             name.setText(tableStudent.getSelectionModel().getSelectedItem().getName());
             lastName.setText(tableStudent.getSelectionModel().getSelectedItem().getLastName());
-            city.setValue(tableStudent.getSelectionModel().getSelectedItem().getCity());
+            city.setValue(tableStudent.getSelectionModel().getSelectedItem().getCity().getNom());
             email.setText(tableStudent.getSelectionModel().getSelectedItem().getEmail());
             date.setValue(LocalDate.parse(tableStudent.getSelectionModel().getSelectedItem().getDate()));
 
@@ -154,7 +147,7 @@ public class Controller {
         String inputText = searchBar.getText().trim();
         if (!inputText.isEmpty()) {
             StudentDaoImp sdi = new StudentDaoImp();
-            List<Student> searchResults = sdi.searchStudents(inputText);
+            List<Student> searchResults = sdi.searchQuery(inputText);
 
             if (!searchResults.isEmpty()) {
                 ObservableList<Student> students = tableStudent.getItems();

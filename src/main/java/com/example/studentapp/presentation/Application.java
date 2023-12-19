@@ -1,4 +1,4 @@
-package com.example.studentapp;
+package com.example.studentapp.presentation;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("StudentApp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/example/studentapp/studentApp.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 988, 583);
         stage.setTitle("Student App");
         stage.setScene(scene);
