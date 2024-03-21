@@ -115,7 +115,6 @@ public class StudentDaoImp implements DaoI<Student,Integer>{
                 std.setName(rst.getString("NAME"));
                 std.setLastName(rst.getString("LAST_NAME"));
                 std.setEmail(rst.getString("EMAIL"));
-
                 Ville city = new Ville();
                 city.setId(rst.getInt("ID_VILLE"));
                 city.setNom(rst.getString("NOM"));

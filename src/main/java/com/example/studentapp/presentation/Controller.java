@@ -26,6 +26,7 @@ import java.util.TimerTask;
 public class Controller {
     @FXML
     TextField name, lastName, id, email, searchBar;
+
     @FXML
     Label alert;
     @FXML
