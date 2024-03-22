@@ -1,10 +1,7 @@
-# Student Management System
+# Student Management Application (CRUD Operations)
 
 This is a Java application that allows users to perform CRUD (Create, Read, Update, Delete) operations on student data. The application uses JavaFX for the user interface and JDBC for database interactions.
 
-# Student Management System
-
-Based on the code excerpts and the information provided, this project is a Java application that uses Maven for dependency management. The application is a student management system, with functionalities to perform CRUD operations on student data. The application uses JavaFX for the user interface and JDBC for database interactions.
 
 ## Technologies Used
 
@@ -43,6 +40,17 @@ CRUD operations on student data: The application allows users to create, read, u
 Search for students: Users can search for students by name or ID.
 User-friendly interface: The application uses JavaFX to provide a user-friendly interface.
 
+# Database Configuration
+
+The application uses a MySQL database. The database configuration details are stored in the `database.properties` file located in the `src/main/resources` directory.
+
+The `database.properties` file contains the following properties:
+
+- `db.url`: The URL of the database. The format is `jdbc:mysql://<hostname>:<port>/<database_name>`.
+- `db.user`: The username for the database.
+- `db.password`: The password for the database.
+- `db.create_if_not_exist`: A boolean property that determines whether the database should be created if it doesn't exist. Set this property to `true` if you want the database to be created automatically.
+
 ## Screenshots
 
 ![img.png](img.png)
@@ -55,6 +63,5 @@ To run this project, you need to have Java and Maven installed on your machine.
 2. Navigate to the project directory: `cd student-management-system`
 3. Run the application: `mvn javafx:run`
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
